@@ -1,0 +1,50 @@
+<div>
+    <label>Title</label>
+    <input type="text" name="title" value="<%= card.title %>">
+</div>
+
+<div>
+    <label>Idol</label>
+    <select name="idol">
+        <% idols.forEach(idol => { %>
+        <% if (idol.id === card.idol) { %>
+            <option selected label="<%= idol.name %>" value="<%= idol.id%>">
+        <% } else { %>
+            <option label="<%= idol.name %>" value="<%= idol.id%>">
+        <% } %>
+        <% }) %>
+    </select>
+</div>
+
+<div>
+    <label>Version</label>
+    <input type="text" name="version" value="<%= card.version %>">
+</div>
+
+<div>
+    <label>Own</label>
+    <label for="yes">Yes</label>
+    <input type="radio" name="have" id="yes" value="<%= card.have%>">
+    <label for="no">No</label>
+    <input type="radio" name="have" id="no" value="<%= card.have %>">
+</div>
+
+<div>
+    <label>Date Acquired</label>
+    <input type="date" name="acquireDate"
+        value="<%= card.acquireDate == null ? "" :
+        card.acquireDate.toISOString().split('T')[0] %>
+    ">
+</div>
+
+<div>
+    <label>Description</label>
+    <textarea name="description"><%= card.description %></textarea>
+</div>
+
+<div>
+    <label>Image</label>
+    <input type="file" name="image">
+</div>
+
+
