@@ -17,7 +17,26 @@ const upload = multer({
 
 // All Cards Route
 router.get('/', async (req, res) => {
-
+  let query = Card.find()
+  if (req.query.title != null && req.query.title != '') {
+    query = query.regex('title', new RegExp(req.query.title, 'i'))
+  }
+  if (req.query.version != null && req.query.version != '') {
+    query = query.regex('version', new RegExp(req.query.version, 'i'))
+  }
+  // if (req.query.name != null && req.query.name !== '') {
+  //     searchOptions.name = new RegExp(req.query.name, 'i')
+  // }
+  try {
+    const cards = await query.exec()
+    res.render('cards/index', {
+      cards: cards,
+      searchOptions: req.query
+    })
+  } catch (err) {
+    console.log(err)
+    // res.redirect('/')
+  }
 })
 
 // New Card Route
@@ -41,7 +60,7 @@ router.post('/', upload.single('image'), async (req, res) => {
   try {
     const newCard = await card.save()
     // res.redirect(`cards/${newCard.id}`)
-    res.redirect('/cards')
+    res.redirect(`cards`)
   } catch (err) {
     console.log(err)
     if (card.cardImageName != null) {

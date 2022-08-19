@@ -1,0 +1,40 @@
+<h2>Search Cards</h2>
+<form action="/cards" method="GET">
+
+    <div>
+      <label>Title</label>
+      <input type="text" name="title" value="<%= searchOptions.title %>">
+    </div>
+
+    <div>
+      <label>Idol</label>
+      <input type="text" name="idol" value="<%= searchOptions.idol %>">
+    </div>
+
+    <div>
+      <label>Version</label>
+      <input type="text" name="version" value="<%= searchOptions.version %>">
+    </div>
+
+    <div>
+      <label>Own</label>
+      <label for="yes">Yes</label>
+      <input type="radio" name="have" id="yes" value="<%= searchOptions.have%>">
+      <label for="no">No</label>
+      <input type="radio" name="have" id="no" value="<%= searchOptions.have %>">
+  </div>
+
+  <div>
+    <button type="submit">Search</button>
+  </div>
+</form>
+<br>
+<div>
+  <% cards.forEach(card => { %>
+    <div>
+      <img height="150" width="100" src="<%= card.cardImagePath  %> ">
+  <% }) %>
+</div>
+
+
+
