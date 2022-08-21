@@ -1,11 +1,10 @@
 <h2>Search Idols</h2>
 <form action="/idols" method="GET">
-  <div>
     <div>
       <label>Name</label>
       <input type="text" name="name" value="<%= searchOptions.name %>">
     </div>
-  </div>
+
   <div>
     <button type="submit">Search</button>
   </div>
@@ -15,5 +14,4 @@
   <div>
     <div><%= idol.name %></div>
 <% }) %>
-
 

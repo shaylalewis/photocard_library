@@ -1,0 +1,25 @@
+<h2>Search Groups</h2>
+<form action="/groups" method="GET">
+
+<div>
+    <label>Groups</label>
+    <select name="group">
+        <% groups.forEach(group => { %>
+        <% if (group.id != '') { %>
+            <option selected label="<%= group.name %>" value="<%= group.id%>">
+        <% } else { %>
+            <option label="<%= group.name %>" value="<%= group.id%>">
+        <% } %>
+        <% }) %>
+    </select>
+</div>
+
+<div>
+    <button type="submit">Search</button>
+  </div>
+</form>
+<br>
+<% groups.forEach(group => { %>
+  <div>
+    <div><%= group.name %></div>
+<% }) %>

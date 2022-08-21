@@ -6,7 +6,9 @@ const idolSchema = new mongoose.Schema({
         required: true
     },
     group: {
-        type: String
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Group'
     }
 })
 

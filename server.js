@@ -11,6 +11,7 @@ const bodyParser = require('body-parser')
 const indexRouter = require('./routes/index')
 const idolRouter = require('./routes/idols')
 const cardRouter = require('./routes/cards')
+const groupRouter = require('./routes/groups')
 
 app.set('view engine', 'ejs')
 app.set('views', __dirname + '/views')
@@ -29,6 +30,6 @@ db.once('open', () => console.log('connected to mongoose'))
 app.use('/', indexRouter)
 app.use('/idols', idolRouter)
 app.use('/cards', cardRouter)
-
+app.use('/groups', groupRouter)
 
 app.listen(process.env.PORT || 3000)
