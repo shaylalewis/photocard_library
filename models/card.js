@@ -33,7 +33,10 @@ const cardSchema = new mongoose.Schema({
     cardImageName: {
         type: String,
         required: true
-    }
+    },
+    // group: {
+    //     type: String
+    // }
 })
 
 cardSchema.virtual('cardImagePath').get(function () {

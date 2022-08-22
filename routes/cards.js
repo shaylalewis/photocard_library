@@ -24,8 +24,8 @@ router.get('/', async (req, res) => {
   if (req.query.version != null && req.query.version != '') {
     query = query.regex('version', new RegExp(req.query.version, 'i'))
   }
-  // if (req.query.name != null && req.query.name !== '') {
-  //     searchOptions.name = new RegExp(req.query.name, 'i')
+  // if (req.query.idol != null && req.query.idol !== '') {
+  //   query = query.regex('idol', new RegExp(req.query.idol, 'i'))
   // }
   try {
     const cards = await query.exec()
