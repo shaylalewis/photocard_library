@@ -1,40 +1,39 @@
-<h2>Search Cards</h2>
+<h2 class="page-header">Search Card</h2>
 <form action="/cards" method="GET">
-
-    <div>
+  <div class="form-row">
+    <div class="form-item">
       <label>Title</label>
       <input type="text" name="title" value="<%= searchOptions.title %>">
     </div>
-
-   <!-- <div>
+   <!-- <div class="form-item">
       <label>Idol</label>
       <input type="select" name="idol" value="<%#= searchOptions.idol %>">
     </div> -->
-
-    <div>
+       <!-- <div class="form-item">
+      <label>Group</label>
+      <input type="select" name="group" value="<%#= searchOptions.group %>">
+    </div> -->
+  </div>
+  <div class="form-row">
+    <div class="form-item">
+      <label>Date Acquired</label>
+      <input type="date" name="acquireDate" value="<%= searchOptions.acquireDate %>">
+    </div>
+    <div class="form-item">
       <label>Version</label>
       <input type="text" name="version" value="<%= searchOptions.version %>">
     </div>
-
-    <div>
+    <div class="form-item">
       <label>Own</label>
       <label for="yes">Yes</label>
       <input type="radio" name="have" id="yes" value="<%= searchOptions.have%>">
       <label for="no">No</label>
       <input type="radio" name="have" id="no" value="<%= searchOptions.have %>">
+    </div>
   </div>
-
-  <div>
-    <button type="submit">Search</button>
+  <div class="form-row form-row-end">
+    <button class="btn btn-primary" type="submit">Search</button>
   </div>
 </form>
 <br>
-<div>
-  <% cards.forEach(card => { %>
-    <div>
-      <img height="150" width="100" src="<%= card.cardImagePath  %> ">
-  <% }) %>
-</div>
-
-
-
+<%- include('../partials/cardGrid', { cards: cards, large: true }) %>

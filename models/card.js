@@ -1,10 +1,4 @@
 const mongoose = require('mongoose')
-const path = require('path')
-mongoose.Schema.Types.String.checkRequired(v => typeof v === 'string');
-
-const cardImageBasePath = 'uploads/cardImages'
-
-
 
 const cardSchema = new mongoose.Schema({
     title: {
@@ -47,10 +41,9 @@ const cardSchema = new mongoose.Schema({
 })
 
 cardSchema.virtual('cardImagePath').get(function () {
-    if (this.cardImageName != null) {
-        return path.join('/', cardImageBasePath, this.cardImageName)
+    if (this.cardImage != null && this.cardImageType != null) {
+        return `data:${this.cardImageType};charset=utf-8;base64,${this.cardImage.toString('base64')}`
     }
 })
 
 module.exports = mongoose.model('Card', cardSchema)
-module.exports.cardImageBasePath = cardImageBasePath

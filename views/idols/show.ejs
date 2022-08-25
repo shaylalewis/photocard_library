@@ -1,0 +1,10 @@
+<h2 class="page-header"><%= idol.name %></h2>
+<div class="btn-row">
+  <a class="btn btn-primary" href="/idols/<%= idol.id %>/edit">Edit</a>
+  <%- include('../partials/deleteForm',
+              { url: `/idols/${idol.id}` }) %>
+</div>
+<% if (cardsByidol.length > 0) { %>
+  <h2 class="page-header">Cards By Idol</h2>
+  <%- include('../partials/cardGrid', { cards: cardsByIdol }) %>
+<% } %>

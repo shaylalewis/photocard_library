@@ -1,0 +1,9 @@
+<% cardCoverClass = locals.large ? 'card-cover-large' : '' %>
+<% cardGridClass = locals.large ? 'card-grid-large' : '' %>
+<div class="card-grid <%= cardGridClass %>">
+  <% cards.forEach(card => { %>
+    <a href="/cards/<%= card.id %>">
+      <img class="card-cover <%= cardCoverClass %>" src="<%= card.coverImagePath %>">
+    </a>
+  <% }) %>
+</div>

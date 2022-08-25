@@ -46,36 +46,114 @@ router.post('/', async (req, res) => {
 
   try {
     const newCard = await card.save()
-    res.redirect(`cards`)
-    // res.redirect(`cards/${newCard.id}`)
+    res.redirect(`cards/${newCard.id}`)
   } catch (err) {
     console.log(err)
     // renderNewPage(res, card, true)
   }
 })
 
+// Show Card Route
+router.get('/:id', async (req, res) => {
+  try {
+    const card = await Card.findById(req.params.id)
+      .populate('idol')
+      .exec()
+    res.render('cards/show', { card: card })
+  } catch {
+    res.redirect('/')
+  }
+})
+
+// Edit Card Route
+router.get('/:id/edit', async (req, res) => {
+  try {
+    const card = await Card.findById(req.params.id)
+    renderEditPage(res, card)
+  } catch {
+    res.redirect('/')
+  }
+})
+
+// Update Card Route
+router.put('/:id', async (req, res) => {
+  let card
+
+  try {
+    card = await Card.findById(req.params.id)
+    card.title = req.body.title
+    card.idol = req.body.idol
+    card.version = req.body.version
+    card.have = req.body.have
+    card.acquireDate = new Date(req.body.acquireDate)
+    card.description = req.body.description
+    if (req.body.cover != null && req.body.cover !== '') {
+      saveCover(card, req.body.cover)
+    }
+    await card.save()
+    res.redirect(`/cards/${card.id}`)
+  } catch {
+    if (card != null) {
+      renderEditPage(res, card, true)
+    } else {
+      redirect('/')
+    }
+  }
+})
+
+// Delete Card Page
+router.delete('/:id', async (req, res) => {
+  let card
+  try {
+    card = await Card.findById(req.params.id)
+    await card.remove()
+    res.redirect('/cards')
+  } catch {
+    if (card != null) {
+      res.render('cards/show', {
+        card: card,
+        errorMessage: 'Could not remove card'
+      })
+    } else {
+      res.redirect('/')
+    }
+  }
+})
 
 async function renderNewPage(res, card, hasError = false) {
+  renderFormPage(res, card, 'new', hasError)
+}
+
+async function renderEditPage(res, card, hasError = false) {
+  renderFormPage(res, card, 'edit', hasError)
+}
+
+async function renderFormPage(res, card, form, hasError = false) {
   try {
     const idols = await Idol.find({})
     const params = {
       idols: idols,
       card: card
     }
-    if (hasError) params.errorMessage = 'Error Creating Card'
-    res.render('cards/new', params)
+    if (hasError) {
+      if (form === 'edit') {
+        params.errorMessage = 'Error Updating Card'
+      } else {
+        params.errorMessage = 'Error Creating Card'
+      }
+    }
+    res.render(`cards/${form}`, params)
   } catch {
     res.redirect('/cards')
   }
-  // renderFormPage(res, card, 'new', hasError)
 }
 
 function saveCardImg(card, coverEncoded) {
   if (coverEncoded == null) return
   const cover = JSON.parse(coverEncoded)
   if (cover != null && imageMimeTypes.includes(cover.type)) {
-    card.cardImage = new Buffer.from(cover.data, 'base64')
-    card.cardImageType = cover.type
+    card.coverImage = new Buffer.from(cover.data, 'base64')
+    card.coverImageType = cover.type
   }
 }
 

@@ -1,6 +1,6 @@
-<h2>New Idol</h2>
-<form action="/idols" method="post">
-    <%- include('_form_fields')  %>
-    <a href="/idols">Cancel</a>
-    <button type="submit">Create</button>
-</form>
+<div class="form-row">
+    <div class="form-item">
+      <label>Name</label>
+      <input type="text" name="name" value="<%= idol.name %>">
+    </div>
+  </div>

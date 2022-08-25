@@ -1,17 +1,24 @@
-<h2>Search Idols</h2>
+<h2 class="page-header">Search Idolss</h2>
 <form action="/idols" method="GET">
-    <div>
+  <div class="form-row">
+    <div class="form-item">
       <label>Name</label>
       <input type="text" name="name" value="<%= searchOptions.name %>">
     </div>
-
-  <div>
-    <button type="submit">Search</button>
+  </div>
+  <div class="form-row form-row-end">
+    <button class="btn btn-primary" type="submit">Search</button>
   </div>
 </form>
 <br>
 <% idols.forEach(idol => { %>
-  <div>
-    <div><%= idol.name %></div>
+  <div class="idol-row">
+    <div class="idol-name"><%= idol.name %></div>
+    <div class="btn-row">
+      <a class="btn btn-primary" href="/idols/<%= idol.id %>">View</a>
+      <a class="btn btn-primary" href="/idols/<%= idol.id %>/edit">Edit</a>
+      <%- include('../partials/deleteForm',
+                  { url: `/idols/${idol.id}` }) %>
+    </div>
+  </div>
 <% }) %>
-
