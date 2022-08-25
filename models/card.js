@@ -1,7 +1,10 @@
 const mongoose = require('mongoose')
 const path = require('path')
+mongoose.Schema.Types.String.checkRequired(v => typeof v === 'string');
 
 const cardImageBasePath = 'uploads/cardImages'
+
+
 
 const cardSchema = new mongoose.Schema({
     title: {
@@ -30,10 +33,14 @@ const cardSchema = new mongoose.Schema({
         required: true,
         default: Date.now
     },
-    cardImageName: {
-        type: String,
+    cardImage: {
+        type: Buffer,
         required: true
     },
+    cardImageType: {
+        type: String,
+        required: true
+    }
     // group: {
     //     type: String
     // }
