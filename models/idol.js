@@ -6,11 +6,6 @@ const idolSchema = new mongoose.Schema({
         type: String,
         required: true
     }
-    //   group: {
-    //       type: mongoose.Schema.Types.ObjectId,
-    //       required: true,
-    //       ref: 'Group'
-    //   }
 })
 
 idolSchema.pre('remove', function (next) {

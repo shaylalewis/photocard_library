@@ -10,12 +10,12 @@ router.get('/', async (req, res) => {
   if (req.query.title != null && req.query.title != '') {
     query = query.regex('title', new RegExp(req.query.title, 'i'))
   }
-  if (req.query.version != null && req.query.version != '') {
-    query = query.regex('version', new RegExp(req.query.version, 'i'))
+  if (req.query.acquireedBefore != null && req.query.acquireedBefore != '') {
+    query = query.lte('acquireDate', req.query.acquireedBefore)
   }
-  // if (req.query.publishedAfter != null && req.query.publishedAfter != '') {
-  //   query = query.gte('publishDate', req.query.publishedAfter)
-  // }
+  if (req.query.acquireedAfter != null && req.query.acquireedAfter != '') {
+    query = query.gte('acquireDate', req.query.acquireedAfter)
+  }
   try {
     const cards = await query.exec()
     res.render('cards/index', {
@@ -37,19 +37,17 @@ router.post('/', async (req, res) => {
   const card = new Card({
     title: req.body.title,
     idol: req.body.idol,
-    version: req.body.version,
-    have: req.body.have,
     acquireDate: new Date(req.body.acquireDate),
+    quantity: req.body.quantity,
     description: req.body.description
   })
-  saveCardImg(card, req.body.cover)
+  saveCover(card, req.body.cover)
 
   try {
     const newCard = await card.save()
     res.redirect(`cards/${newCard.id}`)
-  } catch (err) {
-    console.log(err)
-    // renderNewPage(res, card, true)
+  } catch {
+    renderNewPage(res, card, true)
   }
 })
 
@@ -83,9 +81,8 @@ router.put('/:id', async (req, res) => {
     card = await Card.findById(req.params.id)
     card.title = req.body.title
     card.idol = req.body.idol
-    card.version = req.body.version
-    card.have = req.body.have
     card.acquireDate = new Date(req.body.acquireDate)
+    card.quantity = req.body.quantity
     card.description = req.body.description
     if (req.body.cover != null && req.body.cover !== '') {
       saveCover(card, req.body.cover)
@@ -148,7 +145,7 @@ async function renderFormPage(res, card, form, hasError = false) {
   }
 }
 
-function saveCardImg(card, coverEncoded) {
+function saveCover(card, coverEncoded) {
   if (coverEncoded == null) return
   const cover = JSON.parse(coverEncoded)
   if (cover != null && imageMimeTypes.includes(cover.type)) {

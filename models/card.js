@@ -5,44 +5,40 @@ const cardSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    idol: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'Idol'
-    },
-    version: {
-        type: String
-    },
-    have: {
+    description: {
         type: String
     },
     acquireDate: {
-        type: Date
+        type: Date,
+        required: true
     },
-    description: {
-        type: String
+    quantity: {
+        type: Number,
+        required: true
     },
     createdAt: {
         type: Date,
         required: true,
         default: Date.now
     },
-    cardImage: {
+    coverImage: {
         type: Buffer,
         required: true
     },
-    cardImageType: {
+    coverImageType: {
         type: String,
         required: true
+    },
+    idol: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Idol'
     }
-    // group: {
-    //     type: String
-    // }
 })
 
-cardSchema.virtual('cardImagePath').get(function () {
-    if (this.cardImage != null && this.cardImageType != null) {
-        return `data:${this.cardImageType};charset=utf-8;base64,${this.cardImage.toString('base64')}`
+cardSchema.virtual('coverImagePath').get(function () {
+    if (this.coverImage != null && this.coverImageType != null) {
+        return `data:${this.coverImageType};charset=utf-8;base64,${this.coverImage.toString('base64')}`
     }
 })
 

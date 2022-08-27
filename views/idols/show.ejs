@@ -4,7 +4,7 @@
   <%- include('../partials/deleteForm',
               { url: `/idols/${idol.id}` }) %>
 </div>
-<% if (cardsByidol.length > 0) { %>
+<% if (cardsByIdol.length > 0) { %>
   <h2 class="page-header">Cards By Idol</h2>
   <%- include('../partials/cardGrid', { cards: cardsByIdol }) %>
 <% } %>
